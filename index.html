@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form>
+            <div>
+                <label for="ra">Nome</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="idade">Idade</label>
+                <input type="text" name="idade" id="idade">
+            </div>
+            <div>
+                <label for="ra">RA</label>
+                <input type="text" name="ra" id="ra">
+            </div>
+            <div>
+                <label for="cpf">CPF</label>
+                <input type="text" name="cpf" id="cpf">
+            </div>
+
+            <button id="salvar">Salvar</button>
+        </form>
+
+        <table>
+            <thead>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Ra</th>
+                <th>CPF</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const CHAVE = "pessoas";
+
+        var pessoasLocal = localStorage.getItem(CHAVE);
+        var pessoasObjeto = JSON.parse(pessoasLocal);
+        if(!pessoasObjeto) {
+            localStorage.setItem(CHAVE,JSON.stringify([]));
+        } else {
+            for(pessoa of pessoasObjeto) {
+                var table = document.querySelector("tbody");
+                table.innerHTML += `
+                    <tr>
+                        <td>${pessoa.nome}</td>
+                        <td>${pessoa.idade}</td>
+                        <td>${pessoa.ra}</td>
+                        <td>${pessoa.cpf}</td>
+                    </tr>
+                ` 
+            }
+        }
+         
+
+        var button = document.querySelector("#salvar");
+        button.addEventListener("click", (event) => {
+            console.log("clicou");
+            event.preventDefault();
+            var name = document.querySelector("#name").value;
+            var idade = document.querySelector("#idade").value;
+            var ra = document.querySelector("#ra").value;
+            var cpf = document.querySelector("#cpf").value;
+
+            var pessoa = {
+                "nome": name,
+                "idade": idade,
+                "ra": ra,
+                "cpf": cpf
+            }
+
+            var pessoasLocal = localStorage.getItem(CHAVE);
+            var pessoasObjeto = JSON.parse(pessoasLocal);
+            pessoasObjeto.push(pessoa);
+
+            var pessoasSerializada = JSON.stringify(pessoasObjeto);
+            localStorage.setItem(CHAVE, pessoasSerializada);
+            
+            var table = document.querySelector("tbody");
+            table.innerHTML += `
+                <tr>
+                    <td>${pessoa.nome}</td>
+                    <td>${pessoa.idade}</td>
+                    <td>${pessoa.ra}</td>
+                    <td>${pessoa.cpf}</td>
+                </tr>
+            ` 
+        })
+
+    </script>
+</body>
+</html>

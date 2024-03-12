@@ -1,13 +1,5 @@
-class Modelo {
-  initializer() {
-    //var pessoasLocal = localStorage.getItem("pessoa");
-    //var pessoasObjeto = JSON.parse(pessoasLocal);
-    //if(pessoasObjeto) {
-   
-    //} else {
-    //  localStorage.setItem("pessoa", JSON.stringify([]));
-    //}
-
+class Model {
+  constructor() {
     this.dados = localStorage.getItem("pessoa");
     this.dados = JSON.parse(this.dados);
     if(!this.dados) {
@@ -19,6 +11,7 @@ class Modelo {
   salvar(nome, idade, ra, cpf) {
     var pessoa = { nome, idade, ra, cpf };
     this.dados.push(pessoa);
+    this.commit();
   }
 
   remover(indice) {

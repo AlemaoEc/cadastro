@@ -2,6 +2,7 @@ class Controller {
     constructor() {
         this.container = document.querySelector("tbody");;
         this.repositorio = new Model();
+        this.repositorio.init();
 
         this.init();
     }
@@ -16,10 +17,11 @@ class Controller {
     }
 
     bind() {
-        document.querySelector("#salvar").addEventListener(() =>{
+        document.querySelector("#salvar").addEventListener('click', (e) =>{
+            e.preventDefault();
             this.salvarPessoa();
         });
-        for(btn of document.querySelectorAll(".btn-danger")) {
+        for(const btn of document.querySelectorAll(".btn-danger")) {
             btn.addEventListener('click', (e) => {
                 this.removerPessoa(e.target.dataset.indice)
             });
